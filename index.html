@@ -26,7 +26,7 @@ button{position:absolute;bottom:12px;background:#222;color:#eee;border:1px solid
 <div class="wrap">
   <canvas id="c" width="1080" height="1188"></canvas>
   <pre class="code" id="code"></pre>
-  <button id="re" style="right:12px">↻ replay</button>
+  <button id="re" style="right:12px">↻ replay</button><audio id="au" preload="auto" loop></audio>
 </div>
 <script>
 (function(){
@@ -121,6 +121,18 @@ function frame(t){
 var start=performance.now();
 function loop(now){var t=(now-start)/1000;frame(t);drawCode(t);requestAnimationFrame(loop);}
 
+var au=document.getElementById("au"),SONG_START=142;
+au.src="song.mp3";
+function startSong(){
+  if(!au.paused)return;
+  au.currentTime=SONG_START;
+  var p=au.play();
+  if(p&&p.catch)p.catch(function(){});
+}
+au.addEventListener("loadedmetadata",startSong,{once:true});
+window.addEventListener("load",startSong);
+document.addEventListener("pointerdown",startSong);
+document.addEventListener("keydown",startSong);
 
 
 
