@@ -126,7 +126,7 @@ function loop(now){var t=(now-start)/1000;frame(t);drawCode(t);requestAnimationF
 
 
 
-var SONG_FILE="song.mp3",SONG_TITLE="الأغنية",SONG_START=0;
+var SONG_FILE="song.mp3",SONG_TITLE="الأغنية",SONG_START=142;
 var au=document.getElementById("au"),mu=document.getElementById("mu"),L_PLAY="♪ "+SONG_TITLE,L_PAUSE="❚❚ "+SONG_TITLE,L_ERR="⚠ ضيف "+SONG_FILE;
 au.src=SONG_FILE;mu.textContent=L_PLAY;
 mu.addEventListener("click",function(){if(au.paused){if(!au.currentTime)au.currentTime=SONG_START;au.play().then(function(){mu.textContent=L_PAUSE;}).catch(function(){mu.textContent=L_ERR;});}else{au.pause();mu.textContent=L_PLAY;}});
