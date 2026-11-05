@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ASCII Bouquet 3D</title>
+<title>To Farah 🌹</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌹</text></svg>">
 <style>
 :root{--bg:#000;--panel:#12121a;--fg:#d4d4d4;--kw:#c586c0;--cm:#6a9955;--red:#ff4660;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root{--bg:#000}}
@@ -25,7 +26,7 @@ button{position:absolute;bottom:12px;background:#222;color:#eee;border:1px solid
 <div class="wrap">
   <canvas id="c" width="1080" height="1188"></canvas>
   <pre class="code" id="code"></pre>
-  <button id="re" style="right:12px">↻ replay</button>
+  <button id="mu" style="left:12px"></button><button id="re" style="right:12px">↻ replay</button><audio id="au" preload="auto" loop></audio>
 </div>
 <script>
 (function(){
@@ -125,7 +126,12 @@ function loop(now){var t=(now-start)/1000;frame(t);drawCode(t);requestAnimationF
 
 
 
-document.getElementById("re").addEventListener("click",function(){start=performance.now();});
+var SONG_FILE="song.mp3",SONG_TITLE="الأغنية",SONG_START=0;
+var au=document.getElementById("au"),mu=document.getElementById("mu"),L_PLAY="♪ "+SONG_TITLE,L_PAUSE="❚❚ "+SONG_TITLE,L_ERR="⚠ ضيف "+SONG_FILE;
+au.src=SONG_FILE;mu.textContent=L_PLAY;
+mu.addEventListener("click",function(){if(au.paused){if(!au.currentTime)au.currentTime=SONG_START;au.play().then(function(){mu.textContent=L_PAUSE;}).catch(function(){mu.textContent=L_ERR;});}else{au.pause();mu.textContent=L_PLAY;}});
+au.addEventListener("error",function(){mu.textContent=L_ERR;});
+document.getElementById("re").addEventListener("click",function(){start=performance.now();if(!au.paused)au.currentTime=SONG_START;});
 requestAnimationFrame(loop);
 })();
 </script>
